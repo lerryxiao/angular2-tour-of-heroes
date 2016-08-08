@@ -26,6 +26,9 @@ var HeroService = (function () {
          // 2 seconds
         );
     };
+    HeroService.prototype.getHero = function (id) {
+        return this.getHeroes().then(function (heroes) { return heroes.find(function (heroes) { return heroes.id === id; }); });
+    };
     HeroService = __decorate([
         core_1.Injectable(), 
         __metadata('design:paramtypes', [])
