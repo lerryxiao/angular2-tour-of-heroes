@@ -13,6 +13,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
+require('./rxjs-extensions');
 var hero_services_1 = require('./hero.services');
 var AppComponent = (function () {
     function AppComponent() {

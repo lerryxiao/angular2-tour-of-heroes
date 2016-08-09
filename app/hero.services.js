@@ -28,6 +28,21 @@ var HeroService = (function () {
     HeroService.prototype.getHero = function (id) {
         return this.getHeroes().then(function (heroes) { return heroes.find(function (heroes) { return heroes.id === id; }); });
     };
+    HeroService.prototype.delete = function (hero) {
+        var headers = new http_1.Headers();
+        headers.append('Content-Type', 'application/json');
+        var url = this.heroesUrl + "/" + hero.id;
+        return this.http
+            .delete(url, { headers: headers })
+            .toPromise()
+            .catch(this.handleError);
+    };
+    HeroService.prototype.save = function (hero) {
+        if (hero.id) {
+            return this.put(hero);
+        }
+        return this.post(hero);
+    };
     HeroService.prototype.handleError = function (error) {
         console.log('An error occurred', error);
         return Promise.reject(error.message || error);
@@ -40,6 +55,16 @@ var HeroService = (function () {
             .post(this.heroesUrl, JSON.stringify(hero), { headers: headers })
             .toPromise()
             .then(function (res) { return res.json().data; })
+            .catch(this.handleError);
+    };
+    HeroService.prototype.put = function (hero) {
+        var headers = new http_1.Headers();
+        headers.append('Content-Type', 'application/json');
+        var url = this.heroesUrl + "/" + hero.id;
+        return this.http
+            .put(url, JSON.stringify(hero), { headers: headers })
+            .toPromise()
+            .then(function () { return hero; })
             .catch(this.handleError);
     };
     HeroService = __decorate([
