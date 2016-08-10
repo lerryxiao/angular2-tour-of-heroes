@@ -1,6 +1,3 @@
-/**
- * Created by lerry on 16-8-6.
- */
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -11,27 +8,25 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+/**
+ * Created by lerry on 8/9/16.
+ */
 var core_1 = require('@angular/core');
-var router_1 = require('@angular/router');
-require('./rxjs-extensions');
-var hero_services_1 = require('./hero.services');
-var AppComponent = (function () {
-    function AppComponent() {
-        this.title = 'Tour of Heroes';
+var http_1 = require('@angular/http');
+var HeroSearchService = (function () {
+    function HeroSearchService(http) {
+        this.http = http;
     }
-    AppComponent = __decorate([
-        core_1.Component({
-            selector: 'my-app',
-            templateUrl: "./app/app.component.html",
-            styleUrls: ['app/app.component.css'],
-            directives: [router_1.ROUTER_DIRECTIVES],
-            providers: [
-                hero_services_1.HeroService
-            ]
-        }), 
-        __metadata('design:paramtypes', [])
-    ], AppComponent);
-    return AppComponent;
+    HeroSearchService.prototype.search = function (term) {
+        return this.http
+            .get("app/heroes/?name=" + term)
+            .map(function (r) { return r.json().data; });
+    };
+    HeroSearchService = __decorate([
+        core_1.Injectable(), 
+        __metadata('design:paramtypes', [http_1.Http])
+    ], HeroSearchService);
+    return HeroSearchService;
 }());
-exports.AppComponent = AppComponent;
-//# sourceMappingURL=app.component.js.map
+exports.HeroSearchService = HeroSearchService;
+//# sourceMappingURL=hero-search.service.js.map
